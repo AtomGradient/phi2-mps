@@ -152,9 +152,9 @@ def generate(prompt: mx.array, model: Phi2, temp: Optional[float] = 0.0):
         yield y
 
 
-def load_model(model):
+def load_model(modelPath):
     model = Phi2(ModelArgs())
-    weights = mx.load(model)
+    weights = mx.load(modelPath)
     model.update(tree_unflatten(list(weights.items())))
     tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2", trust_remote_code=True)
     return model, tokenizer

@@ -34,7 +34,7 @@ phi2-mps --model weights.npz --prompt "Hi how are you" --max_tokens 256
 
 ## CLI Options
 
-The `whisper-mps` repo provides an all round support for running Whisper in various settings. More command-line support will be provided later
+The `phi2-mps` command-line support below:
 
 ```
   --model MODEL-PATH

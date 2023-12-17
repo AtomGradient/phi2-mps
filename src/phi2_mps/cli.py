@@ -3,6 +3,7 @@ import mlx.core as mx
 from . import phi2
 
 parser = argparse.ArgumentParser(description="Phi-2 inference script")
+
 parser.add_argument(
     "--prompt",
     help="The message to be processed by the model",
@@ -21,45 +22,43 @@ parser.add_argument(
     type=float,
     default=0.0,
 )
-
 parser.add_argument("--seed", type=int, default=0, help="The PRNG seed")
-args = parser.parse_args()
 
-mx.random.seed(args.seed)
+def main():
+    args = parser.parse_args()
+    mx.random.seed(args.seed)
+    model, tokenizer = phi2.load_model()
+    prompt = tokenizer(
+        args.prompt,
+        return_tensors="np",
+        return_attention_mask=False,
+    )["input_ids"]
 
-model, tokenizer = phi2.load_model()
+    prompt = mx.array(prompt)
 
-prompt = tokenizer(
-    args.prompt,
-    return_tensors="np",
-    return_attention_mask=False,
-)["input_ids"]
+    print("[INFO] Generating with Phi-2...", flush=True)
+    print(args.prompt, end="", flush=True)
 
-prompt = mx.array(prompt)
+    tokens = []
+    for token, _ in zip(phi2.generate(prompt, model, args.temp), range(args.max_tokens)):
+        tokens.append(token)
 
-print("[INFO] Generating with Phi-2...", flush=True)
-print(args.prompt, end="", flush=True)
+        if (len(tokens) % 10) == 0:
+            mx.eval(tokens)
+            eos_index = next(
+                (i for i, t in enumerate(tokens) if t.item() == tokenizer.eos_token_id),
+                None,
+            )
 
-tokens = []
-for token, _ in zip(phi2.generate(prompt, model, args.temp), range(args.max_tokens)):
-    tokens.append(token)
+            if eos_index is not None:
+                tokens = tokens[:eos_index]
 
-    if (len(tokens) % 10) == 0:
-        mx.eval(tokens)
-        eos_index = next(
-            (i for i, t in enumerate(tokens) if t.item() == tokenizer.eos_token_id),
-            None,
-        )
+            s = tokenizer.decode([t.item() for t in tokens])
+            print(s, end="", flush=True)
+            tokens = []
+            if eos_index is not None:
+                break
 
-        if eos_index is not None:
-            tokens = tokens[:eos_index]
-
-        s = tokenizer.decode([t.item() for t in tokens])
-        print(s, end="", flush=True)
-        tokens = []
-        if eos_index is not None:
-            break
-
-mx.eval(tokens)
-s = tokenizer.decode([t.item() for t in tokens])
-print(s, flush=True)
+    mx.eval(tokens)
+    s = tokenizer.decode([t.item() for t in tokens])
+    print(s, flush=True)

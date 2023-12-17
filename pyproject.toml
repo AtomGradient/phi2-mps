@@ -17,3 +17,6 @@ build-backend = "pdm.backend"
 
 [tool.pdm]
 package-type = "library"
+
+[project.scripts]
+phi2-mps = "phi2_mps.cli:main"

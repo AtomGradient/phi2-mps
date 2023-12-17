@@ -17,7 +17,7 @@ pip install phi2-mps
 Download Phi-2 Model with this url:
 ```bash
 # this may take a while,cause the model size is about 5.18G
-pip install phi2-mps
+wget https://huggingface.co/AlexWuKing/atomgradient_models/resolve/main/weights.npz
 ```
 
 Run inference from any path on your computer:

@@ -4,6 +4,13 @@ from . import phi2
 
 parser = argparse.ArgumentParser(description="Phi-2 inference script")
 
+# model path should be type of [npz]
+parser.add_argument(
+    "--model",
+    required=True,
+    type=str,
+    help="where the phi2 model store in local",
+)
 parser.add_argument(
     "--prompt",
     help="The message to be processed by the model",
@@ -27,7 +34,7 @@ parser.add_argument("--seed", type=int, default=0, help="The PRNG seed")
 def main():
     args = parser.parse_args()
     mx.random.seed(args.seed)
-    model, tokenizer = phi2.load_model()
+    model, tokenizer = phi2.load_model(args.model)
     prompt = tokenizer(
         args.prompt,
         return_tensors="np",

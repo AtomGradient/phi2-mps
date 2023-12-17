@@ -1,6 +1,6 @@
 [project]
 name = "phi2_mps"
-version = "0.0.3"
+version = "0.0.4"
 description = "phi2 command line tools with apple mps support"
 authors = [
     {name = "wushuhong", email = "wushuhong@atomgradient.com"},

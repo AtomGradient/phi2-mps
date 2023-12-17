@@ -26,6 +26,8 @@ Run inference from any path on your computer:
 # [weights.npz] should be the download path of the model file
 phi2-mps --model weights.npz --prompt "Hi how are you" --max_tokens 256
 ```
+<img src="./sample.png" alt="image" width="50%" height="auto">
+
 
 > [!NOTE]
 > The CLI is highly opinionated and only works on Apple MPS.

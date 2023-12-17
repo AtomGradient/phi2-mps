@@ -1,4 +1,5 @@
 import argparse
+from pathlib import Path
 import mlx.core as mx
 from . import phi2
 
@@ -8,7 +9,7 @@ parser = argparse.ArgumentParser(description="Phi-2 inference script")
 parser.add_argument(
     "--model",
     required=True,
-    type=str,
+    type=Path,
     help="where the phi2 model store in local",
 )
 parser.add_argument(

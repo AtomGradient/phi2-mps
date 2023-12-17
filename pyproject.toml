@@ -1,0 +1,19 @@
+[project]
+name = "phi2_mps"
+version = "0.0.1"
+description = "phi2 command line tools with apple mps support"
+authors = [
+    {name = "wushuhong", email = "wushuhong@atomgradient.com"},
+]
+dependencies = []
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+package-type = "library"

@@ -43,6 +43,8 @@ The `phi2-mps` command-line support below:
                 The prompt will send to model to gen tokens    
   --max_tokens MAX-TOKEN
                 The Total number of tokens will be replied to you
+  --temp TEMP   The sampling temperature.
+  --seed SEED   The PRNG seed              
 ```
 
 ## WE ARE HIRING
